@@ -4,7 +4,6 @@ import (
 	"golang-web-api/book"
 	"golang-web-api/handler"
 	"log"
-	"net/http"
 
 	"github.com/gin-gonic/gin"
 	"gorm.io/driver/mysql"
@@ -28,14 +27,10 @@ func main() {
 
 	v1 := router.Group("/v1")
 
-	v1.GET("/", rootHandler)
+	v1.GET("/", bookHandler.RootHandler)
 	v1.POST("/book", bookHandler.PostBooksHandler)
+	v1.GET("/books", bookHandler.GetBooks)
+	v1.GET("/book/:id", bookHandler.GetBook)
 
 	router.Run()
-}
-
-func rootHandler(c *gin.Context) {
-	c.JSON(http.StatusOK, gin.H{
-		"name": "Bagus Kurnia",
-	})
 }
